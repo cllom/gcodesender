@@ -1,5 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fastest Serial terminal in your browser for Chrome.</title>
+<title>G-code Sender</title>
 <meta name="Description" content="Set your baud speed and hit connect.
  A serial terminal that runs with out any plugins in chrome.">
 <link rel="stylesheet" href="./style.css">
@@ -32,10 +32,37 @@ Print :
 <button onclick="printGcode()">▶️</button>
 <button onclick="togglePause()">⏸</button>
 Status:
- <input type="text" id="status">
+<input type="text" id="status">
+<button class="reboot-button" onclick="rebootController()">Reboot Controller</button>
 
-
+<hr>
 <div class="flex-container">
+
+    <div class="flex-child">
+        Jog Controller
+        <div class="jog-controller">
+            <button class="up" onclick="move('up')">↑ Y+</button>
+            <button class="left" onclick="move('left')">← X-</button>
+            <button class="right" onclick="move('right')">→ X+</button>
+            <button class="down" onclick="move('down')">↓ Y-</button>
+            <button class="center" onclick="resetToZero()">⌂</button>
+            <button class="z-up" onclick="move('zUp')">↑ Z+</button>
+            <button class="z-down" onclick="move('zDown')">↓ Z-</button>
+        </div>
+        <br>
+
+        <div class="step-size-input">
+            <label for="step-size">Step Size:</label>
+            <input type="number" id="step-size" name="step-size" value="1" min="0.1" step="0.1">
+            <label>mm</label>
+        </div>
+
+        Controller State
+        <div class="controller-state" id="controller-state">
+            Current Position: (0, 0, 0)
+        </div>
+    </div>
+
     <div class="flex-child magenta">
         <br>
         <input type="text" id="lineToSend" style="width:calc(100% - 55px);">

@@ -186,4 +186,60 @@ async function sendNextLine() {
 
 }
 
+// jog controller
+function move(direction) {
+    const stepSize = parseFloat(document.getElementById('step-size').value);
+    switch(direction) {
+        case 'up':
+            controllerState.y += stepSize;
+            break;
+        case 'down':
+            controllerState.y -= stepSize;
+            break;
+        case 'left':
+            controllerState.x -= stepSize;
+            break;
+        case 'right':
+            controllerState.x += stepSize;
+            break;
+        case 'zUp':
+            controllerState.z += stepSize;
+            break;
+        case 'zDown':
+            controllerState.z -= stepSize;
+            break;
+    }
+    updateStateDisplay();
+    alert('Moving ' + direction + ' by ' + stepSize + ' mm');
+    // Add your movement logic here
+}
+
+// controller state
+let controllerState = {
+    x: 0,
+    y: 0,
+    z: 0
+};
+
+function resetToZero() {
+    controllerState.x = 0;
+    controllerState.y = 0;
+    controllerState.z = 0;
+    updateStateDisplay();
+    alert('Position reset to (0, 0, 0)');
+}
+
+function updateStateDisplay() {
+    document.getElementById('controller-state').innerText = `Current Position: (${controllerState.x}, ${controllerState.y}, ${controllerState.z})`;
+}
+
+function rebootController() {
+    controllerState.x = 0;
+    controllerState.y = 0;
+    controllerState.z = 0;
+    document.getElementById('step-size').value = 1;
+    updateStateDisplay();
+    alert('Controller rebooted to initial state');
+}
+
 //populateGcode();
