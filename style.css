@@ -15,12 +15,12 @@ input[type=text] {
     
 }
 button {
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
     border: 1px solid #000000;
-    border-radius: 2px;
-    background-color: #efefef;
-    transition: background-color 0.3s;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    padding: 1px;
 }
 
 .jog-controller button:hover {
@@ -30,11 +30,11 @@ button {
 #serialResults {
     font-family: monospace;
     white-space: pre;
-    height: calc(100% - 80px);
-    width: calc(100% - 20px);
+    height: calc(100% - 95px);
+    width: calc(100% - 25px);
     border-style: solid;
     overflow: scroll;
-    background-color: rgb(182, 199, 199);
+    background-color: rgb(237, 255, 255);
     padding: 10px;
     margin: 0px;
 }
@@ -60,19 +60,16 @@ textarea{
     height:100%;
 }
 
-
 /* The HTML structure creates a grid layout for the jog controller using CSS Grid. Each button has a class that specifies its position within the grid. */
 
 
 .jog-controller {
     display: grid;
     grid-template-columns: repeat(4, 100px);
-    grid-template-rows: repeat(4, 100px);
+    grid-template-rows: repeat(3, 100px);
     gap: 10px;
 }
 .jog-controller button {
-    width: 100px;
-    height: 100px;
     font-size: 24px;
     cursor: pointer;
     border: 2px solid #333;
