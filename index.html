@@ -9,11 +9,6 @@ Baud:
 <input type="text" id="baud" list="baudList" style="width: 10ch;" onclick="this.value = ''"
     onchange="localStorage.baud = this.value">
 <datalist id="baudList">
-    <option value="110">110</option>
-    <option value="300">300</option>
-    <option value="600">600</option>
-    <option value="1200">1200</option>
-    <option value="2400">2400</option>
     <option value="4800">4800</option>
     <option value="9600">9600</option>
     <option value="14400">14400</option>
@@ -75,7 +70,7 @@ Status:
         <input type="checkbox" id="echoOn" onclick="localStorage.echoOn = this.checked;" checked>
         <label for="echoOn">echo</label>
         <button onclick="serialResultsDiv.innerHTML = '';">Clear Terminal</button>
-        <br>
+        <hr>
         <div id="serialResults"></div>
         
     </div>

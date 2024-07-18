@@ -1,11 +1,8 @@
 * {
     background-color: #ffffff;
     font-family: monospace;
-    color: rgb(0, 0, 0);
-    padding: 0px;
 }
 
-button,
 datalist {
     background-color: rgb(223, 218, 218);
 }
@@ -15,6 +12,19 @@ input[type=text] {
     background-color: rgb(212, 204, 204);
     border: 1px solid;
     border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255);
+    
+}
+button {
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    background-color: #efefef;
+    transition: background-color 0.3s;
+}
+
+.jog-controller button:hover {
+    background-color: #ddd;
 }
 
 #serialResults {
