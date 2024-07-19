@@ -44,9 +44,6 @@ async function sendSerialLine() {
     await writer.write(dataToSend);
 }
 
-
-
-
 async function listenToPort() {
     const textDecoder = new TextDecoderStream();
     const readableStreamClosed = port.readable.pipeTo(textDecoder.writable);
@@ -65,11 +62,13 @@ async function listenToPort() {
 
         let theLastLine = lines(serialBuffer)
 
-
         if (printingStatus == "PRINTING") {
-            if (theLastLine == "ok") sendNextLine();
+            theLastLine = String(theLastLine).replace(/(\r\n|\n|\r)/gm, "");
+            console.log(console.log(JSON.stringify(theLastLine)));
+            if (theLastLine == "ok") {
+                sendNextLine();
+            }
         }
-
     }
 }
 
@@ -114,6 +113,7 @@ async function loadGcode(gcodeToShow){
     gcodeLines = gcodeToShow.split('\n');
 
     lineHeight = document.getElementById("gcodeToSend").scrollHeight / gcodeLines.length;
+
 }
 
 
@@ -182,36 +182,45 @@ async function sendNextLine() {
     appendToTerminal("Sending #" + currentGcodeLine + "> " + lineToSend + "\r\n");
 
     await writer.write(lineToSend + "\r\n");
-    
-
 }
 
 // jog controller
-function move(direction) {
+async function move(direction) {
     const stepSize = parseFloat(document.getElementById('step-size').value);
+    const feedRate = parseInt(document.getElementById('feed-rate').value);
+    let gCodeCommand = 'G21G91 ';
     switch(direction) {
         case 'up':
             controllerState.y += stepSize;
+            gCodeCommand += `Y-${stepSize}`;
             break;
         case 'down':
             controllerState.y -= stepSize;
+            gCodeCommand += `Y${stepSize}`;
             break;
         case 'left':
             controllerState.x -= stepSize;
+            gCodeCommand += `X-${stepSize}`;
             break;
         case 'right':
             controllerState.x += stepSize;
+            gCodeCommand += `X${stepSize}`;
             break;
         case 'zUp':
             controllerState.z += stepSize;
+            gCodeCommand += `Z${stepSize}`;
             break;
         case 'zDown':
             controllerState.z -= stepSize;
+            gCodeCommand += `Z-${stepSize}`;
             break;
     }
     updateStateDisplay();
-    alert('Moving ' + direction + ' by ' + stepSize + ' mm');
-    // Add your movement logic here
+
+    // Send Serial Line
+    gCodeCommand = gCodeCommand + 'F' +feedRate + "\r\n";
+    if (document.getElementById("echoOn").checked == true) appendToTerminal("> " + gCodeCommand);
+    await writer.write(gCodeCommand);
 }
 
 // controller state
@@ -221,12 +230,17 @@ let controllerState = {
     z: 0
 };
 
-function resetToZero() {
+async function resetToZero() {
     controllerState.x = 0;
     controllerState.y = 0;
     controllerState.z = 0;
     updateStateDisplay();
     alert('Position reset to (0, 0, 0)');
+
+    // Send Serial Line
+    gCodeCommand = 'G10 P0 L20 X0 Y0 Z0' + "\r\n";
+    if (document.getElementById("echoOn").checked == true) appendToTerminal("> " + gCodeCommand);
+    await writer.write(gCodeCommand);
 }
 
 function updateStateDisplay() {

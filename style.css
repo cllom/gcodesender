@@ -8,8 +8,8 @@ datalist {
 }
 
 input[type=text] {
-    color: rgb(72, 75, 72);
-    background-color: rgb(212, 204, 204);
+    color: rgb(0, 0, 0);
+    background-color: rgb(216, 216, 216);
     border: 1px solid;
     border-color: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255);
     
